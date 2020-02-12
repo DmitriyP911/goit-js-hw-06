@@ -11,7 +11,11 @@ const getUsersWithEyeColor = ( users, color ) => users.filter( eye => eye.eyeCol
 
 console.log( getUsersWithEyeColor( users, 'blue' ) ); // [объект Moore Hensley, объект Sharlene Bush, объект Carey Barr]
 
-const getUsersWithGender = ( users, gender ) => users.filter( male => male.gender === gender );
+const getUsersWithGender = ( users, gender ) => {
+  return users
+    .filter( male => male.gender === gender )
+    .map( obj => obj.name );
+}
 
 console.log( getUsersWithGender( users, 'male' ) ); // [ 'Moore Hensley', 'Ross Vazquez', 'Carey Barr', 'Blackburn Dotson' ]
 
@@ -20,8 +24,9 @@ const getInactiveUsers = users => users.filter( online => !online.isActive );
 console.log( getInactiveUsers( users ) ); // [объект Moore Hensley, объект Ross Vazquez, объект Blackburn Dotson]
 
 const getUserWithEmail = ( users, email ) => {
-  const arr = users.filter( user => user.email === email );
-  return arr.shift();
+  return users
+    .filter( user => user.email === email )
+    .map( obj => obj.name );
 };
 
 console.log( getUserWithEmail( users, 'shereeanthony@kog.com' ) ); // {объект пользователя Sheree Anthony}
@@ -38,19 +43,29 @@ const calculateTotalBalance = users => users.reduce( ( total, user ) => total +=
 
 console.log( calculateTotalBalance( users ) ); // 20916
 
-const getUsersWithFriend = ( users, friendName ) => users.filter( userFriend => userFriend.friends.includes( friendName ) );
+const getUsersWithFriend = ( users, friendName ) => {
+  return users
+    .filter( userFriend => userFriend.friends.includes( friendName ) )
+    .map( obj => obj.name );
+}
 
 console.log( getUsersWithFriend( users, 'Briana Decker' ) ); // [ 'Sharlene Bush', 'Sheree Anthony' ]
 console.log( getUsersWithFriend( users, 'Goldie Gentry' ) ); // [ 'Elma Head', 'Sheree Anthony' ]
 
-const getNamesSortedByFriendsCount = users => users.sort( ( a, b ) => a.friends.length - b.friends.length );
+const getNamesSortedByFriendsCount = users => {
+  return users
+    .sort( ( a, b ) => a.friends.length - b.friends.length )
+    .map( obj => obj.name );
+}
 
 console.log( getNamesSortedByFriendsCount( users ) );
 // [ 'Moore Hensley', 'Sharlene Bush', 'Elma Head', 'Carey Barr', 'Blackburn Dotson', 'Sheree Anthony', 'Ross Vazquez' ]
 
 const getSortedUniqueSkills = users => {
-  const arr = users.map( ob => ob.skills ).flat();
-  return arr.filter( ( skill, ind ) => arr.indexOf( skill ) === ind ).sort();
+  return users
+    .flatMap( ob => ob.skills )
+    .filter( ( item, index, arr ) => arr.indexOf( item ) === index )
+    .sort();
 };
 
 console.log( getSortedUniqueSkills( users ) );
